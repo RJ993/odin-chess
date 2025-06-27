@@ -1,10 +1,10 @@
 require_relative 'board_elements/squares'
 
 class Board
-  attr_reader :alphabet_designation, :board
+  attr_reader :alphabet_designation, :layout
 
   def initialize
-    @board = board_creator
+    @layout = board_creator
   end
 
   def board_creator
@@ -19,14 +19,14 @@ class Board
         board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'white'))
         alpha_number += 1
         alpha = number_to_alpha(alpha_number)
-        board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'red'))
+        board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'brown'))
       end
       number -= 1
       alpha_number = 0
       4.times do
         alpha_number += 1
         alpha = number_to_alpha(alpha_number)
-        board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'red'))
+        board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'brown'))
         alpha_number += 1
         alpha = number_to_alpha(alpha_number)
         board_array.push(Square.new("#{alpha.to_s + number.to_s}", 'white'))
@@ -48,10 +48,23 @@ class Board
     }.key(number)
   end
 
+  def alpha_to_number(letter)
+    return {
+      'a' => 1,
+      'b' => 2,
+      'c' => 3,
+      'd' => 4,
+      'e' => 5,
+      'f' => 6,
+      'g' => 7,
+      'h' => 8
+  }[letter]
+  end
+
   def to_s
   board_string = ''
   number = 8
-    board.each_with_index do |square, index|
+    layout.each_with_index do |square, index|
       if (index + 1) % 8 == 0
         board_string += "#{square.to_s}\n"
       elsif (index + 1) % 8 == 1
@@ -65,10 +78,10 @@ class Board
   board_string
   end
 
-  def reverse_board
+  def reversed
   board_string = ''
   number = 1
-    board.reverse.each_with_index do |square, index|
+    layout.reverse.each_with_index do |square, index|
       if (index + 1) % 8 == 0
         board_string += "#{square.to_s}\n"
       elsif (index + 1) % 8 == 1
