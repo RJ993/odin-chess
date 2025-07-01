@@ -3,28 +3,41 @@ require_relative 'game_elements/board'
 require_relative 'game_elements/board_elements/pieces/pawn'
 
 class Game
+  attr_accessor :white_player, :black_player
+
   def initialize
-    @player = Player.new
+    @white_player = Player.new('white')
+    @black_player = Player.new('black')
     @board = Board.new
   end
-  def demonstration
-    puts 'Hello, this is a demonstration of what this could become. Please enjoy!'
-    puts  'Type out the square you want to move to. For instance "a8". If you want to exit the game loop, Type q.'
+  def introduction
+    puts 'Hello, this is a more fleshed out intermediate version. Please enjoy!'
+    puts  'Type out the square like "a8" for instance. If you want to exit the game loop, Type q.'
     board_set_up
     play
   end
 
   def board_set_up
-    @board.layout[27].change_piece(@player.pieces[0])
-    index = 8
-    8.times do
-      @board.layout[index].change_piece(Pawn.new)
+    index = 0
+    number = 0
+    16.times do 
+      @board.layout[index].change_piece(@black_player.pieces[number])
       index += 1
+      number += 1
     end
     index = 48
+    number = 8
     8.times do
-      @board.layout[index].change_piece(Pawn.new)
+      @board.layout[index].change_piece(@white_player.pieces[number])
       index += 1
+      number += 1
+    end
+    index = 56
+    number = 0
+    8.times do
+      @board.layout[index].change_piece(@white_player.pieces[number])
+      index += 1
+      number += 1
     end
     puts @board
   end
@@ -32,10 +45,17 @@ class Game
   def play
     input = ''
     until input == 'q'
-      puts 'Now please put in your square!'
+      puts 'Now White, where are you moving FROM?'
       input = gets.chomp.downcase
       if input != 'q'
-        @player.move(input, @board)
+        @white_player.make_move(input, @board, self)
+        puts @board.reversed
+      end
+      return if input == 'q'
+      puts 'Now Black, where are you moving FROM?'
+      input = gets.chomp.downcase
+      if input != 'q'
+        @black_player.make_move(input, @board, self)
         puts @board
       end
     end
