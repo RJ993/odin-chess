@@ -5,6 +5,8 @@ require_relative '../game_mechanics'
 
 module Movement
   def move(player, input, board, game)
+    new_square = castling?(input, board) if input == 'o-o' || input == 'o-o-o'
+    return new_square if new_square == 'CASTLED'
     current_square = board.layout.find{|square| square.designation == @location}
     current_square_index = board.layout.index{|square| square.designation == @location}
     current_square_location = current_square.designation
@@ -99,5 +101,27 @@ module Movement
       passing_square = board.layout[current_square_index + 1]
       en_passant(player, game, passing_square) if passing_square.piece.en_passant_able == true
     end
+  end
+
+  def castling_manager(input, board, king_square, rook_square)
+    king_square.piece.moved = true
+    rook_square.piece.moved = true
+    self.short_castling(board, king_square, rook_square) if input == 'o-o'
+    self.long_castling(board, king_square, rook_square) if input == 'o-o-o'
+  end
+
+  def castling?(input, board)
+    king_square = board.layout.find {|square| square.designation == self.location}
+    rook_square = board.layout.find {|square| square.designation == 'a1'} if self.color == 'white' && input == 'o-o-o'
+    rook_square = board.layout.find {|square| square.designation == 'a8'} if self.color == 'black' && input == 'o-o-o'
+    rook_square = board.layout.find {|square| square.designation == 'h1'} if self.color == 'white' && input == 'o-o'
+    rook_square = board.layout.find {|square| square.designation == 'h8'} if self.color == 'black' && input == 'o-o'
+    new_square = nil
+    return new_square if king_square.piece.class != King || rook_square.piece.class != Rook
+    if king_square.piece.moved == false && rook_square.piece.moved == false
+      castling_manager(input, board, king_square, rook_square) 
+      new_square = 'CASTLED'
+    end
+    new_square
   end
 end

@@ -12,7 +12,7 @@ class Game
   end
   def introduction
     puts 'Hello, this is a more fleshed out intermediate version. Please enjoy!'
-    puts  'Type out the square like "a8" for instance. If you want to exit the game loop, Type q.'
+    puts 'Type out the square like "a8" for instance. If you want to exit the game loop, Type q.'
     board_set_up
     play
   end
@@ -42,22 +42,38 @@ class Game
     puts @board
   end
 
-  def play
-    input = ''
-    until input == 'q'
+  def white_move(input)
+    finished_move = ''
+    until (finished_move != nil && finished_move != '' ) || input == 'q'
       puts 'Now White, where are you moving FROM?'
       input = gets.chomp.downcase
       if input != 'q'
-        @white_player.make_move(input, @board, self)
-        puts @board.reversed
-      end
-      return if input == 'q'
-      puts 'Now Black, where are you moving FROM?'
-      input = gets.chomp.downcase
-      if input != 'q'
-        @black_player.make_move(input, @board, self)
-        puts @board
+        finished_move = @white_player.make_move(input, @board, self)
+        puts @board.reversed if finished_move != nil
       end
     end
+    input
   end
+
+  def black_move(input)
+    finished_move = ''
+    until (finished_move != nil && finished_move != '' ) || input == 'q'
+        puts 'Now Black, where are you moving FROM?'
+        input = gets.chomp.downcase
+        if input != 'q'
+          finished_move = @black_player.make_move(input, @board, self)
+          puts @board if finished_move != nil
+        end
+    end
+  end
+
+  def play
+    input = ''
+    until input == 'q'
+      input = white_move(input)
+      return if input == 'q'
+      input = black_move(input)
+    end
+  end
+
 end

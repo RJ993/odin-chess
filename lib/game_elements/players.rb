@@ -32,9 +32,6 @@ class Player
     puts 'Where will you move your piece?'
     the_move = gets.chomp.downcase
     finished_move = the_piece.move(self, the_move, board, game)
-    until finished_move != nil
-      the_move = gets.chomp.downcase
-      finished_move = the_piece.move(self, the_move, board, game)
-    end
+    return finished_move
   end
 end

@@ -1,7 +1,7 @@
 require_relative 'board_elements/squares'
 
 class Board
-  attr_reader :alphabet_designation, :layout
+  attr_reader :layout
 
   def initialize
     @layout = board_creator
