@@ -36,7 +36,7 @@ class Pawn
       array += [[-1, 1]] if board.layout[current_location - 9].piece != nil
       end
     else
-      array += [0, -1]
+      array += [[0, -1]]
       if board != ''
       array += [[0, -2]] if @first_move == true && board.layout[current_location + 8].piece == nil
       array += [[1, -1]] if board.layout[current_location + 9].piece != nil
