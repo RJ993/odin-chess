@@ -2,10 +2,12 @@ require_relative '../../players'
 require_relative '../../movement'
 require_relative '../../board'
 require_relative '../squares'
+require_relative '../../special_movements/en_passant'
 
 class Pawn
   attr_accessor :location, :color, :first_move, :moves, :en_passant_able
   include Movement
+  include En_Passant
 
   def initialize(player)
     @color = player.color
@@ -47,22 +49,6 @@ class Pawn
     return array
   end
 
-  def en_passant?(board, loc)
-    array = []
-    if color == 'white'
-      if board.layout[loc].designation[1] == '5'
-      array += [[1, 1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'black'
-      array += [[-1, 1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'black'
-      end
-    else
-      if board.layout[loc].designation[1] == '4'
-      array += [[1, -1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'white'
-      array += [[-1, -1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'white'
-      end
-    end
-    return array
-  end
-
   def promote(player, new_square)
     puts 'What piece do you want to promote to'
     puts 'Q for Queen, R for Rook, B for Bishop, N for Knight'
@@ -82,5 +68,16 @@ class Pawn
     end
     new_square.change_piece(player.pieces.last)
     player.pieces.delete(self)
+  end
+
+  def pawn_options(new_square, cord, player)
+    return if new_square == nil
+    player.pieces.each do |piece|
+      self.en_passant_able = false if piece.class == Pawn && self.first_move == false
+    end
+    self.en_passant_able = true if self.first_move == true
+    self.first_move = false if self.first_move == true
+    new_square = nil if new_square.designation[0] == cord[0] && new_square.piece != nil
+    new_square
   end
 end

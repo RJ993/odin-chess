@@ -18,27 +18,8 @@ class Game
   end
 
   def board_set_up
-    index = 0
-    number = 0
-    16.times do 
-      @board.layout[index].change_piece(@black_player.pieces[number])
-      index += 1
-      number += 1
-    end
-    index = 48
-    number = 8
-    8.times do
-      @board.layout[index].change_piece(@white_player.pieces[number])
-      index += 1
-      number += 1
-    end
-    index = 56
-    number = 0
-    8.times do
-      @board.layout[index].change_piece(@white_player.pieces[number])
-      index += 1
-      number += 1
-    end
+    black_set_up
+    white_set_up
     puts @board
   end
 
@@ -73,6 +54,33 @@ class Game
       input = white_move(input)
       return if input == 'q'
       input = black_move(input)
+    end
+  end
+
+  def white_set_up
+    index = 48
+    number = 8
+    8.times do
+      @board.layout[index].change_piece(@white_player.pieces[number])
+      index += 1
+      number += 1
+    end
+    index = 56
+    number = 0
+    8.times do
+      @board.layout[index].change_piece(@white_player.pieces[number])
+      index += 1
+      number += 1
+    end
+  end
+
+  def black_set_up
+    index = 0
+    number = 0
+    16.times do 
+      @board.layout[index].change_piece(@black_player.pieces[number])
+      index += 1
+      number += 1
     end
   end
 
