@@ -51,8 +51,10 @@ class Game
   def play
     input = ''
     until input == 'q'
+      define_legal_moves
       input = white_move(input)
       return if input == 'q'
+      define_legal_moves
       input = black_move(input)
     end
   end
@@ -82,6 +84,11 @@ class Game
       index += 1
       number += 1
     end
+  end
+
+  def define_legal_moves
+     @white_player.prep_movement(@board)
+     @black_player.prep_movement(@board)
   end
 
 end

@@ -31,7 +31,14 @@ class Player
     end
     puts 'Where will you move your piece?'
     the_move = gets.chomp.downcase
-    finished_move = the_piece.move(self, the_move, board, game)
+    #finished_move = the_piece.move(self, the_move, board, game)
+    finished_move = the_piece.move(self, game, board, the_move)
     return finished_move
+  end
+
+  def prep_movement(board)
+    pieces.each do |piece|
+      piece.prep_move_pos(board)
+    end
   end
 end

@@ -2,13 +2,14 @@ require_relative '../../players'
 require_relative '../../movement'
 
 class Rook
-  attr_accessor :location, :color, :moved
+  attr_accessor :location, :color, :moved, :move_pos
   include Movement
 
   def initialize(player)
     @color = player.color
     @display = make_display
-    @moves = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+    @moves = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    @move_pos = []
     @location = nil
     @moved = false
   end

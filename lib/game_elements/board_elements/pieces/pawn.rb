@@ -5,7 +5,7 @@ require_relative '../squares'
 require_relative '../../special_movements/en_passant'
 
 class Pawn
-  attr_accessor :location, :color, :first_move, :moves, :en_passant_able
+  attr_accessor :location, :color, :first_move, :moves, :en_passant_able, :move_pos
   include Movement
   include En_Passant
 
@@ -14,6 +14,7 @@ class Pawn
     @display = make_display
     @location = nil
     @moves = generate_movement
+    @move_pos = []
     @first_move = true
     @en_passant_able = false
   end
@@ -70,14 +71,22 @@ class Pawn
     player.pieces.delete(self)
   end
 
-  def pawn_options(new_square, cord, player)
-    return if new_square == nil
+  def pawn_options(board, cord)
+    front_squares = []
+    self.move_pos.each do |square| 
+      front_squares.push(square) if square[0] == cord[0]
+    end
+    front_squares.each do |square|
+      actual_square = board.layout.find {|psquare| psquare.designation == square}
+      self.move_pos.delete(square) if actual_square.piece != nil
+    end
+  end
+
+  def pawn_conditions(player)
     player.pieces.each do |piece|
       self.en_passant_able = false if piece.class == Pawn && self.first_move == false
     end
     self.en_passant_able = true if self.first_move == true
     self.first_move = false if self.first_move == true
-    new_square = nil if new_square.designation[0] == cord[0] && new_square.piece != nil
-    new_square
   end
 end

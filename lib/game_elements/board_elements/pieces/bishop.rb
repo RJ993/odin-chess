@@ -2,13 +2,14 @@ require_relative '../../players'
 require_relative '../../movement'
 
 class Bishop
-  attr_accessor :location, :color
+  attr_accessor :location, :color, :move_pos
   include Movement
 
   def initialize(player)
     @color = player.color
     @display = make_display
-    @moves = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+    @moves = [[1, 1], [-1, -1], [-1, 1], [1, -1]]
+    @move_pos = []
     @location = nil
   end
 

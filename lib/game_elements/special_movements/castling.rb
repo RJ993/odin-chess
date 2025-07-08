@@ -33,11 +33,11 @@ module Castling
     if self.color == 'white'
       square_one = board.layout.find {|square| square.designation == 'f1'}
       square_two = board.layout.find {|square| square.designation == 'g1'}
-      act_of_castling(square_one, square_two)
+      act_of_castling(king_square, rook_square, square_one, square_two)
     else
       square_one = board.layout.find {|square| square.designation == 'f8'}
       square_two = board.layout.find {|square| square.designation == 'g8'}
-      act_of_castling(square_one, square_two)
+      act_of_castling(king_square, rook_square, square_one, square_two)
     end
   end
 
@@ -46,16 +46,16 @@ module Castling
       square_one = board.layout.find {|square| square.designation == 'd1'}
       square_two = board.layout.find {|square| square.designation == 'c1'}
       square_three = board.layout.find {|square| square.designation == 'b1'}
-      act_of_castling(square_one, square_two, square_three)
+      act_of_castling(king_square, rook_square, square_one, square_two, square_three)
     else
       square_one = board.layout.find {|square| square.designation == 'd8'}
       square_two = board.layout.find {|square| square.designation == 'c8'}
       square_three = board.layout.find {|square| square.designation == 'b8'}
-      act_of_castling(square_one, square_two, square_three)
+      act_of_castling(king_square, rook_square, square_one, square_two, square_three)
     end
   end
 
-  def act_of_castling(square_one, square_two, square_three = Square.new('white'))
+  def act_of_castling(king_square, rook_square, square_one, square_two, square_three = Square.new('', 'white'))
     if square_one.piece == nil && square_two.piece == nil && square_three.piece == nil
         square_two.change_piece(self)
         square_one.change_piece(rook_square.piece)
