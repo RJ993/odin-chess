@@ -10,6 +10,7 @@ class Game
     @black_player = Player.new('black')
     @board = Board.new
   end
+  
   def introduction
     puts 'Hello, this is a more fleshed out intermediate version. Please enjoy!'
     puts 'Type out the square like "a8" for instance. If you want to exit the game loop, Type q.'
@@ -20,41 +21,37 @@ class Game
   def board_set_up
     black_set_up
     white_set_up
-    puts @board
   end
 
   def white_move(input)
+    puts @board
     finished_move = ''
     until (finished_move != nil && finished_move != '' ) || input == 'q'
       puts 'Now White, where are you moving FROM?'
       input = gets.chomp.downcase
-      if input != 'q'
-        finished_move = @white_player.make_move(input, @board, self)
-        puts @board.reversed if finished_move != nil
-      end
+      finished_move = @white_player.make_move(input, @board, @black_player) if input != 'q'
     end
     input
   end
 
   def black_move(input)
+    puts @board.reversed
     finished_move = ''
     until (finished_move != nil && finished_move != '' ) || input == 'q'
         puts 'Now Black, where are you moving FROM?'
         input = gets.chomp.downcase
-        if input != 'q'
-          finished_move = @black_player.make_move(input, @board, self)
-          puts @board if finished_move != nil
-        end
+        finished_move = @black_player.make_move(input, @board, @white_player) if input != 'q'
     end
+    input
   end
 
   def play
     input = ''
     until input == 'q'
-      define_legal_moves
+      define_legal_moves(@black_player, @white_player)
       input = white_move(input)
       return if input == 'q'
-      define_legal_moves
+      define_legal_moves(@white_player, @black_player)
       input = black_move(input)
     end
   end
@@ -86,9 +83,10 @@ class Game
     end
   end
 
-  def define_legal_moves
-     @white_player.prep_movement(@board)
-     @black_player.prep_movement(@board)
+  def define_legal_moves(turn_ended, turn_started)
+     turn_ended.prep_movement(@board, turn_started)
+     turn_started.prep_movement(@board, turn_ended)
+     turn_started.in_check?
   end
 
 end

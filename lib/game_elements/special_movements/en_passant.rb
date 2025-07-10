@@ -4,22 +4,18 @@ require_relative '../players'
 require_relative '../../game_mechanics'
 
 module En_Passant
-  def en_passant(taking_player, game, passed_square)
-    if taking_player == game.white_player
-      game.black_player.pieces.delete(passed_square.piece)
-    else
-      game.white_player.pieces.delete(passed_square.piece)
-    end
+  def en_passant(taking_player, opposing_player, passed_square)
+    opposing_player.pieces.delete(passed_square.piece)
     passed_square.reset_square
   end
 
-  def en_passant_met?(player, game, board, new_square, current_square_index)
+  def en_passant_met?(player, opposing_player, board, new_square, current_square_index)
     if new_square != nil && board.layout[current_square_index - 1].piece.class == Pawn
       passing_square = board.layout[current_square_index - 1]
-      en_passant(player, game, passing_square) if passing_square.piece.en_passant_able == true
+      en_passant(player, opposing_player, passing_square) if passing_square.piece.en_passant_able == true
     elsif new_square != nil && board.layout[current_square_index + 1].piece.class == Pawn
       passing_square = board.layout[current_square_index + 1]
-      en_passant(player, game, passing_square) if passing_square.piece.en_passant_able == true
+      en_passant(player, opposing_player, passing_square) if passing_square.piece.en_passant_able == true
     end
   end
 
