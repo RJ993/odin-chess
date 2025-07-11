@@ -55,7 +55,7 @@ class Player
     prep_movement(board, opposing_player)
     if king.in_check == true
       square = king.reset_movement(current_square, new_square, taken, taken_piece, opposing_player, moved_piece)
-      puts 'Sorry, but that does not save you!'
+      puts 'Invalid, please try again!'
     end
     square
   end

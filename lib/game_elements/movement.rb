@@ -17,8 +17,10 @@ module Movement
   def calculate_pos(board, new_cords, cords, opposing_player)
     static_movement(board, new_cords) if self.class == King || self.class == Pawn || self.class == Knight
     dynamic_movement(board, new_cords) if self.class == Queen || self.class == Rook || self.class == Bishop
-    self.restrict_movement(opposing_player) if self.class == King
     self.pawn_options(board, cords) if self.class == Pawn
+    if self.class == King
+      self.restrict_movement(opposing_player)
+    end
   end
 
   def static_movement(board, new_cords)
@@ -68,12 +70,12 @@ module Movement
       if new_square != nil && new_square.piece == nil
         new_square.change_piece(self)
         current_square.reset_square
-        pawn_methods(player, opposing_player, board, new_square, current_square_index)
-        new_square = player.out_of_check?(current_square, new_square, false, taken_piece, opposing_player, board, self) if player.king.in_check == true
+        pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
+        new_square = player.out_of_check?(current_square, new_square, false, taken_piece, opposing_player, board, self)
       elsif new_square != nil && new_square.piece.color != player.color
-        pawn_methods(player, opposing_player, board, new_square, current_square_index)
+        pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
         takes(player, opposing_player, current_square, new_square, taken_piece)
-        new_square = player.out_of_check?(current_square, new_square, true, taken_piece, opposing_player, board, self) if player.king.in_check == true
+        new_square = player.out_of_check?(current_square, new_square, true, taken_piece, opposing_player, board, self)
       else
         puts 'Invalid square. Please try another square!'
       end
@@ -99,7 +101,7 @@ module Movement
     return square
   end
 
-  def pawn_methods(player, opposing_player, board, new_square, current_square_index)
+  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
     return if self.class != Pawn
     self.en_passant_met?(player, opposing_player, board, new_square, current_square_index) if new_square.piece == nil
     self.promote(player, new_square) if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
