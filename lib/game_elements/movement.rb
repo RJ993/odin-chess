@@ -61,6 +61,7 @@ module Movement
     new_square = self.castling?(input, board) if (input == 'o-o' || input == 'o-o-o') && self.class == King
     return new_square if new_square == 'CASTLED'
     taken_piece = []
+    self.moved == true if self.class == King || self.class == Rook
     current_square = board.layout.find{|square| square.designation == @location}
     current_square_index = board.layout.index{|square| square.designation == @location}
     new_square = board.layout.find{|square| square.designation == input} if self.move_pos.include?(input)

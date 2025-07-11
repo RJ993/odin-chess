@@ -5,7 +5,7 @@ require_relative '../squares'
 require_relative '../../special_movements/castling'
 
 class King
-  attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check
+  attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check, :blocked_squares
   include Movement
   include Castling
 
@@ -14,6 +14,7 @@ class King
     @display = make_display
     @moves = [[1, 1], [-1, -1], [-1, 1], [1, -1], [1, 0], [-1, 0], [0, 1], [0, -1]]
     @move_pos = []
+    @blocked_squares = []
     @location = nil
     @moved = false
     @in_check = false
@@ -34,6 +35,7 @@ class King
       enemy_squares.push(piece.move_pos)
     end
     forbidden_squares = enemy_squares.flatten.uniq
+    @blocked_squares = forbidden_squares
     move_pos.each do |possibility|
       move_pos.delete(possibility) if forbidden_squares.include?(possibility)
       forbidden_squares.include?(@location) ? @in_check = true : @in_check = false
