@@ -3,11 +3,13 @@ require_relative '../../movement'
 require_relative '../../board'
 require_relative '../squares'
 require_relative '../../special_movements/castling'
+require_relative '../../special_movements/restrictions'
 
 class King
   attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check, :blocked_squares
   include Movement
   include Castling
+  include Restrict
 
   def initialize(player)
     @color = player.color
@@ -27,18 +29,5 @@ class King
 
   def to_s
     @display
-  end
-
-  def restrict_movement(opposing_player)
-    enemy_squares = []
-    opposing_player.pieces.each do |piece|
-      enemy_squares.push(piece.move_pos)
-    end
-    forbidden_squares = enemy_squares.flatten.uniq
-    @blocked_squares = forbidden_squares
-    move_pos.each do |possibility|
-      move_pos.delete(possibility) if forbidden_squares.include?(possibility)
-      forbidden_squares.include?(@location) ? @in_check = true : @in_check = false
-    end
   end
 end

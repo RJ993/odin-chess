@@ -1,9 +1,11 @@
 require_relative '../../players'
 require_relative '../../movement'
+require_relative '../../special_movements/restrictions'
 
 class Rook
   attr_accessor :location, :color, :moved, :move_pos
   include Movement
+  include Restrict
 
   def initialize(player)
     @color = player.color

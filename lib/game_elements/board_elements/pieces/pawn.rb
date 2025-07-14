@@ -3,11 +3,13 @@ require_relative '../../movement'
 require_relative '../../board'
 require_relative '../squares'
 require_relative '../../special_movements/en_passant'
+require_relative '../../special_movements/restrictions'
 
 class Pawn
   attr_accessor :location, :color, :first_move, :moves, :en_passant_able, :move_pos
   include Movement
   include En_Passant
+  include Restrict
 
   def initialize(player)
     @color = player.color
@@ -88,5 +90,11 @@ class Pawn
     end
     self.en_passant_able = true if self.first_move == true
     self.first_move = false if self.first_move == true
+  end
+
+  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece)
+    en_passant_met?(player, opposing_player, board, new_square, current_square_index, taken_piece) if new_square.piece == nil
+    promote(player, new_square) if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
+    pawn_conditions(player)
   end
 end
