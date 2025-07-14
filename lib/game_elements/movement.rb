@@ -31,7 +31,12 @@ module Movement
         new_num = possibility[1] + new_cords[1]
         if %w[a b c d e f g h].include?(new_let) && [1, 2, 3, 4, 5, 6, 7, 8].include?(new_num)
         new_cord = new_let + new_num.to_s
+        pos = board.layout.find {|square| square.designation == new_cord}
+        if pos.piece != nil
+        self.move_pos.push(new_cord) if pos.piece.color != self.color
+        else
         self.move_pos.push(new_cord)
+        end
         end
       end
   end
@@ -49,8 +54,12 @@ module Movement
             new_cord = new_let + new_num.to_s
             direction_multiplier += 1
             pos = board.layout.find {|square| square.designation == new_cord}
-            blocked = true if pos.piece != nil
-            self.move_pos.push(new_cord)
+            if pos.piece != nil
+              blocked = true
+              self.move_pos.push(new_cord) if pos.piece.color != self.color
+            else
+              self.move_pos.push(new_cord)
+            end
             end
           end
         end
@@ -70,7 +79,7 @@ module Movement
       if new_square != nil && new_square.piece == nil
         new_square.change_piece(self)
         current_square.reset_square
-        pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
+        pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece)
         new_square = player.out_of_check?(current_square, new_square, false, taken_piece, opposing_player, board, self)
       elsif new_square != nil && new_square.piece.color != player.color
         pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
@@ -101,9 +110,9 @@ module Movement
     return square
   end
 
-  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input)
+  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece)
     return if self.class != Pawn
-    self.en_passant_met?(player, opposing_player, board, new_square, current_square_index) if new_square.piece == nil
+    en_passant_met?(player, opposing_player, board, new_square, current_square_index, taken_piece) if new_square.piece == nil
     self.promote(player, new_square) if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
     self.pawn_conditions(player)
   end

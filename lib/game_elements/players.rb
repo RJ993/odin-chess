@@ -47,7 +47,6 @@ class Player
       puts "#{@name}, you are in check!!!"
     end
   end
-
   
   def out_of_check?(current_square, new_square, taken, taken_piece, opposing_player, board, moved_piece)
     square = new_square
