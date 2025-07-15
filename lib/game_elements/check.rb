@@ -1,4 +1,4 @@
-
+require_relative 'board_elements/pieces/king'
 
 module Check
   def prep_movement(board, opposing_player)
@@ -13,14 +13,28 @@ module Check
     end
   end
   
-  def out_of_check?(current_square, new_square, taken, taken_piece, opposing_player, board, moved_piece)
-    square = new_square
+  def out_of_check?(current_square, new_square, taken, taken_piece, opposing_player, board, moved_piece, useless_squares)
+    check_status = king.in_check
     opposing_player.prep_movement(board, self)
-    prep_movement(board, opposing_player)
+    self.king.prep_move_pos(board, opposing_player)
     if king.in_check == true
-      square = king.reset_movement(current_square, new_square, taken, taken_piece, opposing_player, moved_piece)
-      puts 'Invalid, please try again!'
+      useless_squares.push(new_square.designation)
     end
-    square
+    self.king.reset_movement(current_square, new_square, taken, taken_piece, opposing_player, moved_piece)
+    opposing_player.prep_movement(board, self)
+    self.king.prep_move_pos(board, opposing_player)
+    king.in_check = check_status
+  end
+
+  def sim_move(board, opposing_player)
+    self.pieces.each do |piece|
+      useless_squares = []
+      piece.move_pos.each do |move|
+        piece.mock_move(board, move, self, opposing_player, useless_squares)
+      end
+      useless_squares.each do |pos|
+        piece.move_pos.delete(pos) if useless_squares.include?(pos)
+      end
+    end
   end
 end

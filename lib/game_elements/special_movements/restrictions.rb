@@ -2,6 +2,7 @@ require_relative '../players'
 require_relative '../board'
 require_relative '../board_elements/squares'
 require_relative '../../game_mechanics'
+require_relative '../movement'
 
 
 module Restrict
@@ -79,5 +80,21 @@ module Restrict
       move_pos.delete(possibility) if forbidden_squares.include?(possibility)
       forbidden_squares.include?(@location) ? @in_check = true : @in_check = false
     end
+  end
+
+  def mock_move(board, input, player, opposing_player, useless_squares)
+    taken_piece = []
+    current_square = board.layout.find{|square| square.designation == @location}
+    current_square_index = board.layout.index{|square| square.designation == @location}
+    new_square = board.layout.find{|square| square.designation == input} if self.move_pos.include?(input)
+      if new_square != nil && new_square.piece == nil
+        new_square.change_piece(self)
+        current_square.reset_square
+        en_passant_met?(player, opposing_player, board, new_square, current_square_index, taken_piece) if self.class == Pawn
+        player.out_of_check?(current_square, new_square, false, taken_piece, opposing_player, board, self, useless_squares)
+      elsif new_square != nil && new_square.piece.color != player.color
+        takes(player, opposing_player, current_square, new_square, taken_piece)
+        player.out_of_check?(current_square, new_square, true, taken_piece, opposing_player, board, self, useless_squares)
+      end
   end
 end

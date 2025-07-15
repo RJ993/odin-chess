@@ -86,6 +86,7 @@ class Game
   def define_legal_moves(turn_ended, turn_started)
      turn_ended.prep_movement(@board, turn_started)
      turn_started.prep_movement(@board, turn_ended)
+     turn_started.sim_move(@board, turn_ended)
      turn_started.in_check?
   end
 

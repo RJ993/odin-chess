@@ -92,7 +92,7 @@ class Pawn
     self.first_move = false if self.first_move == true
   end
 
-  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece)
+  def pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece = [])
     en_passant_met?(player, opposing_player, board, new_square, current_square_index, taken_piece) if new_square.piece == nil
     promote(player, new_square) if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
     pawn_conditions(player)
