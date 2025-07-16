@@ -1,4 +1,4 @@
-require_relative 'board_elements/pieces/king'
+require_relative '../board_elements/pieces/king'
 
 module Check
   def prep_movement(board, opposing_player)

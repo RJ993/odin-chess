@@ -2,7 +2,7 @@ require_relative '../players'
 require_relative '../board'
 require_relative '../board_elements/squares'
 require_relative '../../game_mechanics'
-require_relative '../movement'
+require_relative 'movement'
 
 
 module Restrict
