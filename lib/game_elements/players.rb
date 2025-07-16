@@ -13,8 +13,8 @@ class Player
 
 
   def initialize(color, name = 'Mayonnaise')
-    @name = name
     @color = color
+    @name = name
     @king = King.new(self)
     @pieces = [Rook.new(self), Knight.new(self), Bishop.new(self), Queen.new(self), @king, Bishop.new(self), 
     Knight.new(self), Rook.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self),

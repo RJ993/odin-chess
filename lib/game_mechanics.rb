@@ -7,14 +7,15 @@ class Game
   include Win_Conditions
 
   def initialize
-    @white_player = Player.new('white')
-    @black_player = Player.new('black')
+    puts 'Who will be white?'
+    @white_player = Player.new('white', gets.chomp)
+    puts 'Who will be black?'
+    @black_player = Player.new('black', gets.chomp)
     @board = Board.new
   end
   
   def introduction
-    puts 'Hello, this is a more fleshed out intermediate version. Please enjoy!'
-    puts 'Type out the square like "a8" for instance. If you want to exit the game loop, Type q.'
+    puts 'Welcome players! Good luck!'
     board_set_up
     play
   end
@@ -82,17 +83,35 @@ class Game
     define_legal_moves(opposing_player, player)
     opposing_player.winner = true if win_and_draw_checks(player, opposing_player) == true
     return if opposing_player.winner == true || player.winner == true
-    puts 'What will your action be? ("p" to play on, "r" for resignation, and "d" to offer a draw.)'
+    puts 'What will your action be? ("i" for instructions, "p" to play on, "r" for resignation, and "d" to offer a draw.)'
     input = gets.chomp.downcase
     case input
     when 'r'
       resigns(opposing_player)
     when 'd'
       drawn = offers_draw(player, opposing_player)
+    when 'i'
+      instructions
     else
       init_move(player)
     end
     drawn
+  end
+
+  def instructions
+    puts 'Pawns can move one space, or two spaces if it is their first move. They take diagonally.'
+    puts 'Special Move: En Passant --> If an opposing Pawn moves to the 5th rank (white), or 4th rank (black), they can take
+    the adjacent pawn and move diagonally.'
+    puts 'Knights move in an "L" shape.'
+    puts 'Kings can move in any direction at a fixed distance of one square. Look out for your king\'s safety as if your king is in checkmate,
+    you lose.'
+    puts 'Special Move: Castling --> If your king and rook has not moved, has no pieces between them, and is not in check, You can castle by
+    selecting the square your king is on and input either "o-o" or "o-o-o" depending on which side you want to castle.'
+    puts 'Bishops move diagonally regardless of distance'
+    puts 'Rooks move vertically or horizontally regardless of distance'
+    puts 'Queens have both the movement of a Rook and a Bishop'
+    puts 'When you are in check, your king is attacked but can move a piece to get out while in checkmate, you have no more legal moves'
+    puts 'A stalemate is when you have no more legal moves but you are NOT attacked by any piece.'
   end
 
 end
