@@ -91,7 +91,7 @@ class Game
     when 'd'
       drawn = offers_draw(player, opposing_player)
     when 'i'
-      instructions
+      drawn = instructions
     else
       init_move(player)
     end
@@ -101,17 +101,18 @@ class Game
   def instructions
     puts 'Pawns can move one space, or two spaces if it is their first move. They take diagonally.'
     puts 'Special Move: En Passant --> If an opposing Pawn moves to the 5th rank (white), or 4th rank (black), they can take
-    the adjacent pawn and move diagonally.'
+the adjacent pawn and move diagonally.'
     puts 'Knights move in an "L" shape.'
     puts 'Kings can move in any direction at a fixed distance of one square. Look out for your king\'s safety as if your king is in checkmate,
-    you lose.'
+you lose.'
     puts 'Special Move: Castling --> If your king and rook has not moved, has no pieces between them, and is not in check, You can castle by
-    selecting the square your king is on and input either "o-o" or "o-o-o" depending on which side you want to castle.'
+selecting the square your king is on and input either "o-o" or "o-o-o" depending on which side you want to castle.'
     puts 'Bishops move diagonally regardless of distance'
     puts 'Rooks move vertically or horizontally regardless of distance'
     puts 'Queens have both the movement of a Rook and a Bishop'
     puts 'When you are in check, your king is attacked but can move a piece to get out while in checkmate, you have no more legal moves'
     puts 'A stalemate is when you have no more legal moves but you are NOT attacked by any piece.'
+    return true
   end
 
 end
