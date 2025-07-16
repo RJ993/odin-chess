@@ -8,7 +8,7 @@ require_relative 'movement'
 require_relative 'check'
 
 class Player
-  attr_accessor :pieces, :color, :king, :name
+  attr_accessor :pieces, :color, :king, :name, :winner, :draw
   include Check
 
 
@@ -19,6 +19,8 @@ class Player
     @pieces = [Rook.new(self), Knight.new(self), Bishop.new(self), Queen.new(self), @king, Bishop.new(self), 
     Knight.new(self), Rook.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self), Pawn.new(self),
     Pawn.new(self), Pawn.new(self), Pawn.new(self)]
+    @winner = false
+    @draw = false
   end
 
   def determine_piece(input)

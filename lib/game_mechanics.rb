@@ -24,46 +24,23 @@ class Game
     white_set_up
   end
 
-  def white_move(input)
-    puts @board
+  def init_move(player)
+    puts @board if player.color == 'white'
+    puts @board.reversed if player.color == 'black'
     finished_move = ''
-    until (finished_move != nil && finished_move != '' ) || %w[q r d].include?(input)
-      puts 'Now White, where are you moving FROM?'
+    until (finished_move != nil && finished_move != '' )
+      puts "Now #{player.name}, where are you moving FROM?"
       input = gets.chomp.downcase
-      finished_move = @white_player.make_move(input, @board, @black_player) if input != 'q'
+      finished_move = player.make_move(input, @board, @black_player)
     end
-    input
-  end
-
-  def black_move(input)
-    puts @board.reversed
-    finished_move = ''
-    until (finished_move != nil && finished_move != '' ) ||  %w[q r d].include?(input)
-        puts 'Now Black, where are you moving FROM?'
-        input = gets.chomp.downcase
-        p black_player.king.move_pos
-        finished_move = @black_player.make_move(input, @board, @white_player) if input != 'q'
-    end
-    input
   end
 
   def play
-    input = ''
-    until %w[q r d].include?(input)
-      define_legal_moves(@black_player, @white_player, input)
-      if win_and_draw_checks(@white_player, @black_player) == true
-        input = 'q'
-      end
-      return if %w[q r d].include?(input)
-      @white_player.in_check?
-      input = white_move(input)
-      define_legal_moves(@white_player, @black_player, input)
-      if win_and_draw_checks(@black_player, @white_player) == true
-        input = 'q'
-      end
-      return if %w[q r d].include?(input)
-      @black_player.in_check?
-      input = black_move(input)
+    until @white_player.winner == true || @black_player.winner == true || (@white_player.draw == true && @black_player.draw == true)
+      draw_called = false
+      draw_called = player_action(@white_player, @black_player)
+      return if @white_player.winner == true || @black_player.winner == true || (@white_player.draw == true && @black_player.draw == true)
+      player_action(@black_player, @white_player) if draw_called == false
     end
   end
 
@@ -94,10 +71,28 @@ class Game
     end
   end
 
-  def define_legal_moves(turn_ended, turn_started, input)
+  def define_legal_moves(turn_ended, turn_started)
      turn_ended.prep_movement(@board, turn_started)
      turn_started.prep_movement(@board, turn_ended)
      turn_started.sim_move(@board, turn_ended)
+  end
+
+  def player_action(player, opposing_player)
+    drawn = false
+    define_legal_moves(opposing_player, player)
+    opposing_player.winner = true if win_and_draw_checks(player, opposing_player) == true
+    return if opposing_player.winner == true || player.winner == true
+    puts 'What will your action be? ("p" to play on, "r" for resignation, and "d" to offer a draw.)'
+    input = gets.chomp.downcase
+    case input
+    when 'r'
+      resigns(opposing_player)
+    when 'd'
+      drawn = offers_draw(player, opposing_player)
+    else
+      init_move(player)
+    end
+    drawn
   end
 
 end

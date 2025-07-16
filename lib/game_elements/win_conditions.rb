@@ -7,7 +7,8 @@ module Win_Conditions
       enemy_movements += piece.move_pos
     end
     if enemy_movements == [] && turn_started.king.in_check == true
-      puts "#{turn_ended.name} is the winner!!!"
+      puts "#{turn_ended.name} wins by checkmate!!!"
+      turn_ended.winner = true
       return true
     end
   end
@@ -19,21 +20,35 @@ module Win_Conditions
     end
     if enemy_movements == [] && turn_started.king.in_check == false
       puts "Draw by stalemate!"
+      turn_ended.draw = true
+      turn_started.draw = true
       return true
     end
   end
 
-  def resigns
-    
+  def resigns(opposing_player)
+    opposing_player.winner = true
+    puts "#{opposing_player.name} wins due to opponent's resignation!"
   end
 
-  def offers_draw
-    
+  def offers_draw(player, opposing_player)
+    player.draw = true
+    puts "#{opposing_player.name}, do you want to draw? (y or n)"
+    input = gets.chomp.downcase
+    if input == 'y'
+      opposing_player.draw = true
+      puts 'Draw by agreement!'
+    else
+      puts "Sorry, #{player.name}, but #{opposing_player.name} does not accept."
+    end
+    return true
   end
 
   def insufficient_material(turn_started, turn_ended)
     if turn_started.pieces == [King] && turn_ended.pieces == [King]
       puts 'Draw by insufficient material'
+      turn_started.draw = true
+      turn_ended.draw = true
       return true
     end
   end
