@@ -6,7 +6,7 @@ require_relative '../../special_movements/castling'
 require_relative '../../special_movements/restrictions'
 
 class King
-  attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check, :blocked_squares
+  attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check, :blocked_squares, :fail_safe
   include Movement
   include Castling
   include Restrict
@@ -17,6 +17,7 @@ class King
     @moves = [[1, 1], [-1, -1], [-1, 1], [1, -1], [1, 0], [-1, 0], [0, 1], [0, -1]]
     @move_pos = []
     @blocked_squares = []
+    @fail_safe = []
     @location = nil
     @moved = false
     @in_check = false

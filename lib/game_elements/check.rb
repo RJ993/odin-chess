@@ -34,7 +34,13 @@ module Check
       end
       useless_squares.each do |pos|
         piece.move_pos.delete(pos) if useless_squares.include?(pos)
+        if piece.class == King
+        piece.fail_safe.push(pos) if useless_squares.include?(pos)
+        end
       end
+    end
+    self.king.fail_safe.each do |pos|
+      self.king.move_pos.delete(pos) if self.king.fail_safe.include?(pos)
     end
   end
 end

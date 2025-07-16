@@ -18,14 +18,14 @@ module Movement
         pawn_methods(player, opposing_player, board, new_square, current_square_index, input) if self.class == Pawn
       elsif new_square != nil && new_square.piece.color != player.color
         pawn_methods(player, opposing_player, board, new_square, current_square_index, input) if self.class == Pawn
-        takes(player, opposing_player, current_square, new_square, taken_piece)
+        takes(player, opposing_player, current_square, new_square)
       else
         puts 'Invalid square. Please try another square!'
       end
       new_square
   end
   
-  def takes(taking_player, opposing_player, current_square, new_square, taken_piece)
+  def takes(taking_player, opposing_player, current_square, new_square, taken_piece = [])
     taken_piece.push(new_square.piece)
     opposing_player.pieces.delete(new_square.piece)
     new_square.change_piece(self)
