@@ -1,9 +1,9 @@
 require_relative '../../players'
-require_relative '../../movement'
+require_relative '../../general_movement/movement'
 require_relative '../../board'
 require_relative '../squares'
 require_relative '../../special_movements/en_passant'
-require_relative '../../special_movements/restrictions'
+require_relative '../../general_movement/restrictions'
 
 class Pawn
   attr_accessor :location, :color, :first_move, :moves, :en_passant_able, :move_pos

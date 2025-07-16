@@ -4,8 +4,8 @@ require_relative 'board_elements/pieces/rook'
 require_relative 'board_elements/pieces/bishop'
 require_relative 'board_elements/pieces/knight'
 require_relative 'board_elements/pieces/pawn'
-require_relative 'movement'
-require_relative 'check'
+require_relative 'general_movement/movement'
+require_relative 'general_movement/check'
 
 class Player
   attr_accessor :pieces, :color, :king, :name, :winner, :draw

@@ -1,6 +1,6 @@
 require_relative '../../players'
-require_relative '../../movement'
-require_relative '../../special_movements/restrictions'
+require_relative '../../general_movement/movement'
+require_relative '../../general_movement/restrictions'
 
 class Bishop
   attr_accessor :location, :color, :move_pos
