@@ -26,8 +26,6 @@ class Game
   end
 
   def init_move(player)
-    puts @board if player.color == 'white'
-    puts @board.reversed if player.color == 'black'
     finished_move = ''
     until (finished_move != nil && finished_move != '' )
       puts "Now #{player.name}, where are you moving FROM?"
@@ -79,6 +77,8 @@ class Game
   end
 
   def player_action(player, opposing_player)
+    puts @board if player.color == 'white'
+    puts @board.reversed if player.color == 'black'
     drawn = false
     define_legal_moves(opposing_player, player)
     opposing_player.winner = true if win_and_draw_checks(player, opposing_player) == true
