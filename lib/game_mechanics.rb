@@ -1,16 +1,16 @@
 require_relative 'game_elements/players'
 require_relative 'game_elements/board'
 require_relative 'game_elements/win_conditions'
+require_relative '../serialize'
 
 class Game
   attr_accessor :white_player, :black_player
   include Win_Conditions
+  include Serialize
 
   def initialize
-    puts 'Who will be white?'
-    @white_player = Player.new('white', gets.chomp)
-    puts 'Who will be black?'
-    @black_player = Player.new('black', gets.chomp)
+    @white_player = nil
+    @black_player = nil
     @board = Board.new
   end
   
@@ -83,7 +83,7 @@ class Game
     define_legal_moves(opposing_player, player)
     opposing_player.winner = true if win_and_draw_checks(player, opposing_player) == true
     return if opposing_player.winner == true || player.winner == true
-    puts 'What will your action be? ("i" for instructions, "p" to play on, "r" for resignation, and "d" to offer a draw.)'
+    puts 'What will your action be? ("i" for instructions, "s" to save AND quit, "p" to play on, "r" for resignation, and "d" to offer a draw.)'
     input = gets.chomp.downcase
     case input
     when 'r'
@@ -92,6 +92,10 @@ class Game
       drawn = offers_draw(player, opposing_player)
     when 'i'
       drawn = instructions
+    when 's'
+      to_yaml
+      @white_player.draw = true
+      @black_player.draw = true
     else
       init_move(player)
     end
