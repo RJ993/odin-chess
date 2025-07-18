@@ -4,6 +4,7 @@ require_relative '../../general_movement/restrictions'
 
 class Rook
   attr_accessor :location, :color, :moved, :move_pos
+
   include Movement
   include Restrict
 
@@ -17,7 +18,7 @@ class Rook
   end
 
   def make_display
-    possible_displays = {'white' => "\u2656 ", 'black' => "\u265C "}
+    possible_displays = { 'white' => "\u2656 ", 'black' => "\u265C " }
     possible_displays[@color]
   end
 

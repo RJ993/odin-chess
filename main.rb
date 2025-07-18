@@ -3,9 +3,7 @@ require_relative 'serialize'
 
 input = ''
 puts 'Welcome to Chess!!! (Press "n" for new game, Press "l" to load a game)'
-until %w[n l].include?(input)
-  input = gets.chomp.downcase
-end
+input = gets.chomp.downcase until %w[n l].include?(input)
 if input == 'n'
   game = Game.new
   puts 'Who will be white?'

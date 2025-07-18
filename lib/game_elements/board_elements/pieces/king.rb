@@ -7,6 +7,7 @@ require_relative '../../general_movement/restrictions'
 
 class King
   attr_accessor :location, :color, :moves, :moved, :move_pos, :in_check, :blocked_squares, :fail_safe
+
   include Movement
   include Castling
   include Restrict
@@ -24,7 +25,7 @@ class King
   end
 
   def make_display
-    possible_displays = {'white' => "\u2654 ", 'black' => "\u265A "}
+    possible_displays = { 'white' => "\u2654 ", 'black' => "\u265A " }
     possible_displays[@color]
   end
 

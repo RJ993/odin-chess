@@ -7,6 +7,7 @@ require_relative '../../general_movement/restrictions'
 
 class Pawn
   attr_accessor :location, :color, :first_move, :moves, :en_passant_able, :move_pos
+
   include Movement
   include En_Passant
   include Restrict
@@ -22,7 +23,7 @@ class Pawn
   end
 
   def make_display
-    possible_displays = {'white' => "\u2659 ", 'black' => "\u265F "}
+    possible_displays = { 'white' => "\u2659 ", 'black' => "\u265F " }
     possible_displays[@color]
   end
 
@@ -31,42 +32,40 @@ class Pawn
   end
 
   def generate_movement(board = '')
-      current_location = board.layout.index {|square| square.designation == self.location} if board != ''
-      array = []
+    current_location = board.layout.index { |square| square.designation == location } if board != ''
+    array = []
     if color == 'white'
       array += [[0, 1]]
       if board != ''
-      array += [[0, 2]] if @first_move == true && board.layout[current_location - 8].piece == nil
-      array += [[1, 1]] if board.layout[current_location - 7].piece != nil
-      array += [[-1, 1]] if board.layout[current_location - 9].piece != nil
+        array += [[0, 2]] if @first_move == true && board.layout[current_location - 8].piece.nil?
+        array += [[1, 1]] if board.layout[current_location - 7].piece != nil
+        array += [[-1, 1]] if board.layout[current_location - 9].piece != nil
       end
     else
       array += [[0, -1]]
       if board != ''
-      array += [[0, -2]] if @first_move == true && board.layout[current_location + 8].piece == nil
-      array += [[1, -1]] if board.layout[current_location + 9].piece != nil
-      array += [[-1, -1]] if board.layout[current_location + 7].piece != nil
+        array += [[0, -2]] if @first_move == true && board.layout[current_location + 8].piece.nil?
+        array += [[1, -1]] if board.layout[current_location + 9].piece != nil
+        array += [[-1, -1]] if board.layout[current_location + 7].piece != nil
       end
     end
     array += en_passant?(board, current_location) if board != ''
-    return array
+    array
   end
 
   def promote(player, new_square)
     puts 'What piece do you want to promote to'
     puts 'Q for Queen, R for Rook, B for Bishop, N for Knight'
     input = gets.chomp.upcase
-    until %w[Q R B N].include?(input)
-      puts 'Invalid. Please choose a piece'
-    end
+    puts 'Invalid. Please choose a piece' until %w[Q R B N].include?(input)
     case input
-      when 'Q'
+    when 'Q'
       player.pieces.push(Queen.new(player))
-      when 'R'
+    when 'R'
       player.pieces.push(Rook.new(player))
-      when 'B'
+    when 'B'
       player.pieces.push(Bishop.new(player))
-      when 'N'
+    when 'N'
       player.pieces.push(Knight.new(player))
     end
     new_square.change_piece(player.pieces.last)
@@ -75,12 +74,12 @@ class Pawn
 
   def pawn_options(board, cord)
     front_squares = []
-    self.move_pos.each do |square| 
+    move_pos.each do |square|
       front_squares.push(square) if square[0] == cord[0]
     end
     front_squares.each do |square|
-      actual_square = board.layout.find {|psquare| psquare.designation == square}
-      self.move_pos.delete(square) if actual_square.piece != nil
+      actual_square = board.layout.find { |psquare| psquare.designation == square }
+      move_pos.delete(square) unless actual_square.piece.nil?
     end
   end
 
@@ -88,13 +87,19 @@ class Pawn
     player.pieces.each do |piece|
       piece.en_passant_able = false if piece.class == Pawn && piece.first_move == false
     end
-    self.en_passant_able = true if self.first_move == true
-    self.first_move = false if self.first_move == true
+    self.en_passant_able = true if first_move == true
+    self.first_move = false if first_move == true
   end
 
   def pawn_methods(player, opposing_player, board, new_square, current_square_index, input, taken_piece = [])
-    en_passant_met?(player, opposing_player, board, new_square, current_square_index, taken_piece) if new_square.piece == nil
-    promote(player, new_square) if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
+    if new_square.piece.nil?
+      en_passant_met?(player, opposing_player, board, new_square, current_square_index,
+                      taken_piece)
+    end
+    if (player.color == 'white' && input[1] == '8') || (player.color == 'black' && input[1] == '1')
+      promote(player,
+              new_square)
+    end
     pawn_conditions(player)
   end
 end

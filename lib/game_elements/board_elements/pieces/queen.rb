@@ -4,6 +4,7 @@ require_relative '../../general_movement/restrictions'
 
 class Queen
   attr_accessor :location, :color, :move_pos
+
   include Movement
   include Restrict
 
@@ -16,7 +17,7 @@ class Queen
   end
 
   def make_display
-    possible_displays = {'white' => "\u2655 ", 'black' => "\u265B "}
+    possible_displays = { 'white' => "\u2655 ", 'black' => "\u265B " }
     possible_displays[@color]
   end
 

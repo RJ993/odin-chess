@@ -1,15 +1,15 @@
 require 'yaml'
 
 module Serialize
-    def load_game(file)
-    data = YAML.safe_load(File.read(file), permitted_classes: [Symbol, Player, Board, 
-    King, Queen, Rook, Pawn, Knight, Bishop, Square], aliases: true)
+  def load_game(file)
+    data = YAML.safe_load(File.read(file), permitted_classes: [Symbol, Player, Board,
+                                                               King, Queen, Rook, Pawn, Knight, Bishop, Square], aliases: true)
     @white_player = data[:white_player]
     @black_player = data[:black_player]
     @board = data[:board]
     @turn = data[:turn]
     @turn_iterations = data[:turn_iterations]
-    end
+  end
 
   def to_yaml(file)
     File.open(file, 'w') do |save_file|

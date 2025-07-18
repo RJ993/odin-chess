@@ -4,7 +4,7 @@ require_relative '../../../lib/game_mechanics'
 require_relative '../../../lib/game_elements/special_movements/castling'
 
 describe Castling do
-  subject(:game) {Game.new}
+  subject(:game) { Game.new }
   describe '#castling?' do
     context 'when it is white\'s turn to move, not in check, and in test scenario 1' do
       before do
@@ -16,8 +16,8 @@ describe Castling do
       end
 
       it 'does not castle when opposing piece blocks the way' do
-        square_one = game.board.layout.find {|square| square.designation == 'g1'}
-        square_two = game.board.layout.find {|square| square.designation == 'd4'}
+        square_one = game.board.layout.find { |square| square.designation == 'g1' }
+        square_two = game.board.layout.find { |square| square.designation == 'd4' }
         knight_one = square_one.piece
         knight_two = square_two.piece
         knight_one.move(game.white_player, game.black_player, game.board, 'f3')
@@ -27,8 +27,8 @@ describe Castling do
       end
 
       it 'does not castle when in check' do
-        square_one = game.board.layout.find {|square| square.designation == 'g1'}
-        square_two = game.board.layout.find {|square| square.designation == 'd4'}
+        square_one = game.board.layout.find { |square| square.designation == 'g1' }
+        square_two = game.board.layout.find { |square| square.designation == 'd4' }
         knight_one = square_one.piece
         knight_two = square_two.piece
         knight_one.move(game.white_player, game.black_player, game.board, 'f3')
@@ -38,7 +38,7 @@ describe Castling do
       end
 
       it 'does have ability to castle' do
-        square_one = game.board.layout.find {|square| square.designation == 'g1'}
+        square_one = game.board.layout.find { |square| square.designation == 'g1' }
         knight_one = square_one.piece
         knight_one.move(game.white_player, game.black_player, game.board, 'f3')
         expect(game.white_player.king.castling?('o-o', game.board)).to eql('CASTLED')

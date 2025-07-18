@@ -4,9 +4,10 @@ require_relative '../../general_movement/movement'
 
 class Knight
   attr_accessor :location, :color, :move_pos
+
   include Movement
   include Restrict
-  
+
   def initialize(player)
     @color = player.color
     @display = make_display
@@ -16,7 +17,7 @@ class Knight
   end
 
   def make_display
-    possible_displays = {'white' => "\u2658 ", 'black' => "\u265E "}
+    possible_displays = { 'white' => "\u2658 ", 'black' => "\u265E " }
     possible_displays[@color]
   end
 

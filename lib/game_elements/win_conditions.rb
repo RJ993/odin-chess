@@ -1,18 +1,14 @@
-
-
 module Win_Conditions
   def in_checkmate?(turn_started, turn_ended)
     enemy_movements = []
     turn_started.pieces.each do |piece|
       enemy_movements += piece.move_pos
     end
-    if enemy_movements == [] && turn_started.king.in_check == true
-      puts "#{turn_ended.name} wins by checkmate!!!"
-      turn_ended.winner = true
-      return true
-    else
-      return false
-    end
+    return false unless enemy_movements == [] && turn_started.king.in_check == true
+
+    puts "#{turn_ended.name} wins by checkmate!!!"
+    turn_ended.winner = true
+    true
   end
 
   def in_stalemate?(turn_started, turn_ended)
@@ -20,14 +16,12 @@ module Win_Conditions
     turn_started.pieces.each do |piece|
       enemy_movements += piece.move_pos
     end
-    if enemy_movements == [] && turn_started.king.in_check == false
-      puts "Draw by stalemate!"
-      turn_ended.draw = true
-      turn_started.draw = true
-      return true
-    else
-      return false
-    end
+    return false unless enemy_movements == [] && turn_started.king.in_check == false
+
+    puts 'Draw by stalemate!'
+    turn_ended.draw = true
+    turn_started.draw = true
+    true
   end
 
   def resigns(opposing_player)
@@ -45,18 +39,16 @@ module Win_Conditions
     else
       puts "Sorry, #{player.name}, but #{opposing_player.name} does not accept."
     end
-    return true
+    true
   end
 
   def insufficient_material(turn_started, turn_ended)
-    if turn_started.pieces.length == 1 && turn_ended.pieces.length == 1
-      puts 'Draw by insufficient material'
-      turn_started.draw = true
-      turn_ended.draw = true
-      return true
-    else
-      return false
-    end
+    return false unless turn_started.pieces.length == 1 && turn_ended.pieces.length == 1
+
+    puts 'Draw by insufficient material'
+    turn_started.draw = true
+    turn_ended.draw = true
+    true
   end
 
   def win_and_draw_checks(turn_started, turn_ended)
@@ -64,6 +56,6 @@ module Win_Conditions
     sustained = in_checkmate?(turn_started, turn_ended) if sustained == false
     sustained = in_stalemate?(turn_started, turn_ended) if sustained == false
     sustained = insufficient_material(turn_started, turn_ended) if sustained == false
-    return sustained
+    sustained
   end
 end

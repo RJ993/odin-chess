@@ -11,8 +11,8 @@ class Board
     board_array = []
     number = 9
     4.times do
-    number -= 1
-    alpha_number = 0
+      number -= 1
+      alpha_number = 0
       4.times do
         alpha_number += 1
         alpha = number_to_alpha(alpha_number)
@@ -36,7 +36,7 @@ class Board
   end
 
   def number_to_alpha(number)
-    return {
+    {
       'a' => 1,
       'b' => 2,
       'c' => 3,
@@ -49,7 +49,7 @@ class Board
   end
 
   def alpha_to_number(letter)
-    return {
+    {
       'a' => 1,
       'b' => 2,
       'c' => 3,
@@ -58,40 +58,40 @@ class Board
       'f' => 6,
       'g' => 7,
       'h' => 8
-  }[letter]
+    }[letter]
   end
 
   def to_s
-  board_string = ''
-  number = 8
+    board_string = ''
+    number = 8
     layout.each_with_index do |square, index|
       if (index + 1) % 8 == 0
-        board_string += "#{square.to_s}\n"
+        board_string += "#{square}\n"
       elsif (index + 1) % 8 == 1
-        board_string += "#{number} #{square.to_s}"
+        board_string += "#{number} #{square}"
         number -= 1
       elsif (index + 1) % 8 != 0
-        board_string += "#{square.to_s}"
+        board_string += "#{square}"
       end
     end
-  board_string += '  a b c d e f g h'
-  board_string
+    board_string += '  a b c d e f g h'
+    board_string
   end
 
   def reversed
-  board_string = ''
-  number = 1
+    board_string = ''
+    number = 1
     layout.reverse.each_with_index do |square, index|
       if (index + 1) % 8 == 0
-        board_string += "#{square.to_s}\n"
+        board_string += "#{square}\n"
       elsif (index + 1) % 8 == 1
-        board_string += "#{number} #{square.to_s}"
+        board_string += "#{number} #{square}"
         number += 1
       elsif (index + 1) % 8 != 0
-        board_string += "#{square.to_s}"
+        board_string += "#{square}"
       end
     end
-  board_string += '  h g f e d c b a'
-  board_string
+    board_string += '  h g f e d c b a'
+    board_string
   end
 end

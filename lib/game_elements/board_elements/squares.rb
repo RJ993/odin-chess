@@ -3,10 +3,11 @@ require 'rainbow'
 class Square
   attr_reader :color
   attr_accessor :designation, :piece
+
   def initialize(designation, color)
     @designation = designation
     @piece = nil
-    @piece_display = "  "
+    @piece_display = '  '
     @color = color
   end
 
@@ -18,15 +19,15 @@ class Square
 
   def reset_square
     @piece = nil
-    @piece_display = "  "
+    @piece_display = '  '
   end
 
   def to_s
     case color
-      when 'white'
-        Rainbow(@piece_display).bg(:white)
-      when 'brown'
-        Rainbow(@piece_display).bg(:chocolate)
+    when 'white'
+      Rainbow(@piece_display).bg(:white)
+    when 'brown'
+      Rainbow(@piece_display).bg(:chocolate)
     end
   end
 end
