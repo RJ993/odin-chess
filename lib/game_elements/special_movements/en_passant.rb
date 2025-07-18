@@ -24,16 +24,15 @@ module En_Passant
 
   def en_passant?(board, loc)
     array = []
-    return array if board.layout[loc + 1].piece == nil && board.layout[loc - 1].piece == nil
     if color == 'white'
       if board.layout[loc].designation[1] == '5'
-      array += [[1, 1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'black'
-      array += [[-1, 1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc - 1].piece.color == 'black'
+      array += [[1, 1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'black' && board.layout[loc + 1].piece.en_passant_able == true
+      array += [[-1, 1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc - 1].piece.color == 'black' && board.layout[loc - 1].piece.en_passant_able == true
       end
     else
       if board.layout[loc].designation[1] == '4'
-      array += [[1, -1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'white'
-      array += [[-1, -1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc - 1].piece.color == 'white'
+      array += [[1, -1]] if board.layout[loc + 1].piece.class == Pawn && board.layout[loc + 1].piece.color == 'white' && board.layout[loc + 1].piece.en_passant_able == true
+      array += [[-1, -1]] if board.layout[loc - 1].piece.class == Pawn && board.layout[loc - 1].piece.color == 'white' && board.layout[loc - 1].piece.en_passant_able == true
       end
     end
     return array

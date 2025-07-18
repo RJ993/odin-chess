@@ -23,39 +23,19 @@
     - - 0
       - -1
     move_pos:
-    - d2
     - f1
-    blocked_squares:
-    - b8
-    - e6
-    - c6
-    - c2
+    - d1
     - e2
-    - f3
-    - f5
-    - b5
-    - b3
-    - e7
-    - f6
-    - g5
-    - h4
-    - d6
-    - c5
-    - b4
-    - a3
-    - h6
-    - a6
-    - a5
-    - b6
-    - d5
+    blocked_squares:
     - g6
-    - h5
+    - h6
+    - e7
     fail_safe: []
     location: e1
     moved: false
     in_check: false
   pieces:
-  - &27 !ruby/object:Rook
+  - &29 !ruby/object:Rook
     color: white
     display: "♖ "
     moves:
@@ -70,7 +50,7 @@
     move_pos: []
     location: a1
     moved: false
-  - &28 !ruby/object:Knight
+  - &30 !ruby/object:Knight
     color: white
     display: "♘ "
     moves:
@@ -93,9 +73,8 @@
     move_pos:
     - c3
     - a3
-    - d2
     location: b1
-  - &29 !ruby/object:Bishop
+  - &25 !ruby/object:Bishop
     color: white
     display: "♗ "
     moves:
@@ -108,13 +87,16 @@
     - - 1
       - -1
     move_pos:
-    - d2
     - e3
     - f4
     - g5
     - h6
-    location: c1
-  - &30 !ruby/object:Queen
+    - c1
+    - c3
+    - b4
+    - a5
+    location: d2
+  - &17 !ruby/object:Queen
     color: white
     display: "♕ "
     moves:
@@ -135,14 +117,23 @@
     - - 0
       - -1
     move_pos:
-    - e2
-    - f3
     - g4
-    - h5
-    - d2
-    location: d1
+    - f3
+    - e2
+    - d1
+    - g6
+    - f7
+    - e8
+    - g5
+    - f5
+    - e5
+    - h6
+    - h7
+    - h4
+    - h3
+    location: h5
   - *1
-  - &17 !ruby/object:Bishop
+  - &18 !ruby/object:Bishop
     color: white
     display: "♗ "
     moves:
@@ -158,6 +149,7 @@
     - d5
     - e6
     - f7
+    - g8
     - b3
     - b5
     - a6
@@ -202,7 +194,7 @@
     move_pos: []
     location: h1
     moved: false
-  - &21 !ruby/object:Pawn
+  - &22 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: a2
@@ -216,7 +208,7 @@
     - a4
     first_move: true
     en_passant_able: false
-  - &22 !ruby/object:Pawn
+  - &23 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: b2
@@ -230,22 +222,7 @@
     - b4
     first_move: true
     en_passant_able: false
-  - &23 !ruby/object:Pawn
-    color: white
-    display: "♙ "
-    location: c2
-    moves:
-    - - 0
-      - 1
-    - - 0
-      - 2
-    - - 1
-      - 1
-    move_pos:
-    - c3
-    first_move: true
-    en_passant_able: false
-  - &20 !ruby/object:Pawn
+  - &21 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: d3
@@ -259,7 +236,7 @@
     move_pos: []
     first_move: false
     en_passant_able: true
-  - &19 !ruby/object:Pawn
+  - &20 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: e4
@@ -269,7 +246,7 @@
     move_pos: []
     first_move: false
     en_passant_able: false
-  - &24 !ruby/object:Pawn
+  - &26 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: f2
@@ -283,7 +260,7 @@
     - f4
     first_move: true
     en_passant_able: false
-  - &25 !ruby/object:Pawn
+  - &27 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: g2
@@ -297,7 +274,7 @@
     - g4
     first_move: true
     en_passant_able: false
-  - &26 !ruby/object:Pawn
+  - &28 !ruby/object:Pawn
     color: white
     display: "♙ "
     location: h2
@@ -311,6 +288,21 @@
     move_pos:
     - h3
     - h4
+    first_move: true
+    en_passant_able: false
+  - &24 !ruby/object:Pawn
+    color: white
+    display: "♙ "
+    location: c2
+    moves:
+    - - 0
+      - 1
+    - - 0
+      - 2
+    - - 1
+      - 1
+    move_pos:
+    - c3
     first_move: true
     en_passant_able: false
   winner: false
@@ -343,31 +335,38 @@
     blocked_squares:
     - c3
     - a3
-    - d2
     - e3
     - f4
     - g5
     - h6
-    - e2
-    - f3
+    - c1
+    - b4
+    - a5
     - g4
-    - h5
+    - f3
+    - e2
+    - d1
+    - g6
+    - f7
+    - e8
+    - f5
+    - e5
+    - h7
+    - h4
+    - h3
     - f1
     - d5
     - e6
-    - f7
+    - g8
     - b3
     - b5
     - a6
-    - h3
     - a4
-    - b4
     - g3
-    - h4
     fail_safe: []
     location: e8
     moved: false
-    in_check: false
+    in_check: true
   pieces:
   - &3 !ruby/object:Rook
     color: black
@@ -381,11 +380,10 @@
       - 1
     - - 0
       - -1
-    move_pos:
-    - b8
+    move_pos: []
     location: a8
     moved: false
-  - &18 !ruby/object:Knight
+  - &19 !ruby/object:Knight
     color: black
     display: "♞ "
     moves:
@@ -405,15 +403,7 @@
       - 1
     - - -2
       - -1
-    move_pos:
-    - e6
-    - c6
-    - c2
-    - e2
-    - f3
-    - f5
-    - b5
-    - b3
+    move_pos: []
     location: d4
   - &4 !ruby/object:Bishop
     color: black
@@ -449,11 +439,7 @@
       - 1
     - - 0
       - -1
-    move_pos:
-    - e7
-    - f6
-    - g5
-    - h4
+    move_pos: []
     location: d8
   - *2
   - &6 !ruby/object:Bishop
@@ -468,38 +454,8 @@
       - 1
     - - 1
       - -1
-    move_pos:
-    - e7
-    - d6
-    - c5
-    - b4
-    - a3
+    move_pos: []
     location: f8
-  - &7 !ruby/object:Knight
-    color: black
-    display: "♞ "
-    moves:
-    - - 1
-      - 2
-    - - -1
-      - 2
-    - - -1
-      - -2
-    - - 1
-      - -2
-    - - 2
-      - -1
-    - - 2
-      - 1
-    - - -2
-      - 1
-    - - -2
-      - -1
-    move_pos:
-    - f6
-    - h6
-    - e7
-    location: g8
   - &8 !ruby/object:Rook
     color: black
     display: "♜ "
@@ -526,9 +482,7 @@
       - -2
     - - -1
       - -1
-    move_pos:
-    - a6
-    - a5
+    move_pos: []
     first_move: true
     en_passant_able: false
   - &10 !ruby/object:Pawn
@@ -540,9 +494,7 @@
       - -1
     - - 0
       - -2
-    move_pos:
-    - b6
-    - b5
+    move_pos: []
     first_move: true
     en_passant_able: false
   - &11 !ruby/object:Pawn
@@ -554,9 +506,7 @@
       - -1
     - - 0
       - -2
-    move_pos:
-    - c6
-    - c5
+    move_pos: []
     first_move: true
     en_passant_able: false
   - &12 !ruby/object:Pawn
@@ -568,9 +518,7 @@
       - -1
     - - 0
       - -2
-    move_pos:
-    - d6
-    - d5
+    move_pos: []
     first_move: true
     en_passant_able: false
   - &16 !ruby/object:Pawn
@@ -584,8 +532,8 @@
       - -1
     move_pos: []
     first_move: false
-    en_passant_able: true
-  - &14 !ruby/object:Pawn
+    en_passant_able: false
+  - &13 !ruby/object:Pawn
     color: black
     display: "♟ "
     location: g7
@@ -594,12 +542,13 @@
       - -1
     - - 0
       - -2
+    - - -1
+      - -1
     move_pos:
     - g6
-    - g5
     first_move: true
     en_passant_able: false
-  - &15 !ruby/object:Pawn
+  - &14 !ruby/object:Pawn
     color: black
     display: "♟ "
     location: h7
@@ -608,25 +557,43 @@
       - -1
     - - 0
       - -2
-    move_pos:
-    - h6
-    - h5
+    move_pos: []
     first_move: true
     en_passant_able: false
-  - &13 !ruby/object:Pawn
+  - &15 !ruby/object:Pawn
     color: black
     display: "♟ "
-    location: f7
+    location: f6
     moves:
     - - 0
       - -1
-    - - 0
+    - - -1
+      - -1
+    move_pos: []
+    first_move: false
+    en_passant_able: true
+  - &7 !ruby/object:Knight
+    color: black
+    display: "♞ "
+    moves:
+    - - 1
+      - 2
+    - - -1
+      - 2
+    - - -1
       - -2
-    move_pos:
-    - f6
-    - f5
-    first_move: true
-    en_passant_able: false
+    - - 1
+      - -2
+    - - 2
+      - -1
+    - - 2
+      - 1
+    - - -2
+      - 1
+    - - -2
+      - -1
+    move_pos: []
+    location: g8
   winner: false
   draw: false
 :board: !ruby/object:Board
@@ -698,17 +665,17 @@
     color: brown
   - !ruby/object:Square
     designation: f7
-    piece: *13
-    piece_display: "♟ "
+    piece:
+    piece_display: "  "
     color: white
   - !ruby/object:Square
     designation: g7
-    piece: *14
+    piece: *13
     piece_display: "♟ "
     color: brown
   - !ruby/object:Square
     designation: h7
-    piece: *15
+    piece: *14
     piece_display: "♟ "
     color: white
   - !ruby/object:Square
@@ -738,8 +705,8 @@
     color: white
   - !ruby/object:Square
     designation: f6
-    piece:
-    piece_display: "  "
+    piece: *15
+    piece_display: "♟ "
     color: brown
   - !ruby/object:Square
     designation: g6
@@ -788,8 +755,8 @@
     color: brown
   - !ruby/object:Square
     designation: h5
-    piece:
-    piece_display: "  "
+    piece: *17
+    piece_display: "♕ "
     color: white
   - !ruby/object:Square
     designation: a4
@@ -803,17 +770,17 @@
     color: brown
   - !ruby/object:Square
     designation: c4
-    piece: *17
+    piece: *18
     piece_display: "♗ "
     color: white
   - !ruby/object:Square
     designation: d4
-    piece: *18
+    piece: *19
     piece_display: "♞ "
     color: brown
   - !ruby/object:Square
     designation: e4
-    piece: *19
+    piece: *20
     piece_display: "♙ "
     color: white
   - !ruby/object:Square
@@ -848,7 +815,7 @@
     color: brown
   - !ruby/object:Square
     designation: d3
-    piece: *20
+    piece: *21
     piece_display: "♙ "
     color: white
   - !ruby/object:Square
@@ -873,23 +840,23 @@
     color: white
   - !ruby/object:Square
     designation: a2
-    piece: *21
+    piece: *22
     piece_display: "♙ "
     color: white
   - !ruby/object:Square
     designation: b2
-    piece: *22
+    piece: *23
     piece_display: "♙ "
     color: brown
   - !ruby/object:Square
     designation: c2
-    piece: *23
+    piece: *24
     piece_display: "♙ "
     color: white
   - !ruby/object:Square
     designation: d2
-    piece:
-    piece_display: "  "
+    piece: *25
+    piece_display: "♗ "
     color: brown
   - !ruby/object:Square
     designation: e2
@@ -898,38 +865,38 @@
     color: white
   - !ruby/object:Square
     designation: f2
-    piece: *24
-    piece_display: "♙ "
-    color: brown
-  - !ruby/object:Square
-    designation: g2
-    piece: *25
-    piece_display: "♙ "
-    color: white
-  - !ruby/object:Square
-    designation: h2
     piece: *26
     piece_display: "♙ "
     color: brown
   - !ruby/object:Square
-    designation: a1
+    designation: g2
     piece: *27
+    piece_display: "♙ "
+    color: white
+  - !ruby/object:Square
+    designation: h2
+    piece: *28
+    piece_display: "♙ "
+    color: brown
+  - !ruby/object:Square
+    designation: a1
+    piece: *29
     piece_display: "♖ "
     color: brown
   - !ruby/object:Square
     designation: b1
-    piece: *28
+    piece: *30
     piece_display: "♘ "
     color: white
   - !ruby/object:Square
     designation: c1
-    piece: *29
-    piece_display: "♗ "
+    piece:
+    piece_display: "  "
     color: brown
   - !ruby/object:Square
     designation: d1
-    piece: *30
-    piece_display: "♕ "
+    piece:
+    piece_display: "  "
     color: white
   - !ruby/object:Square
     designation: e1
@@ -951,5 +918,5 @@
     piece: *32
     piece_display: "♖ "
     color: white
-:turn: white
-:turn_iterations: 7
+:turn: black
+:turn_iterations: 10

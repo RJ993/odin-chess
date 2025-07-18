@@ -10,6 +10,8 @@ module Win_Conditions
       puts "#{turn_ended.name} wins by checkmate!!!"
       turn_ended.winner = true
       return true
+    else
+      return false
     end
   end
 
@@ -23,6 +25,8 @@ module Win_Conditions
       turn_ended.draw = true
       turn_started.draw = true
       return true
+    else
+      return false
     end
   end
 
@@ -45,11 +49,13 @@ module Win_Conditions
   end
 
   def insufficient_material(turn_started, turn_ended)
-    if turn_started.pieces == [King] && turn_ended.pieces == [King]
+    if turn_started.pieces.length == 1 && turn_ended.pieces.length == 1
       puts 'Draw by insufficient material'
       turn_started.draw = true
       turn_ended.draw = true
       return true
+    else
+      return false
     end
   end
 

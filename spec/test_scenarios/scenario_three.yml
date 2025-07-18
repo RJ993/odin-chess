@@ -1,0 +1,478 @@
+---
+:white_player: !ruby/object:Player
+  color: white
+  name: r
+  king: &1 !ruby/object:King
+    color: white
+    display: "♔ "
+    moves:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - -1
+      - 1
+    - - 1
+      - -1
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - 1
+    - - 0
+      - -1
+    move_pos:
+    - d5
+    - b3
+    - b5
+    - d3
+    - d4
+    - b4
+    - c5
+    - c3
+    blocked_squares:
+    - g2
+    - h2
+    fail_safe: []
+    location: c4
+    moved: true
+    in_check: false
+  pieces:
+  - *1
+  - &3 !ruby/object:Queen
+    color: white
+    display: "♕ "
+    moves:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - -1
+      - 1
+    - - 1
+      - -1
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - 1
+    - - 0
+      - -1
+    move_pos:
+    - f4
+    - g5
+    - h6
+    - d2
+    - c1
+    - d4
+    - c5
+    - b6
+    - a7
+    - f2
+    - g1
+    - f3
+    - g3
+    - h3
+    - d3
+    - c3
+    - b3
+    - a3
+    - e4
+    - e5
+    - e6
+    - e7
+    - e8
+    - e2
+    - e1
+    location: e3
+  winner: false
+  draw: false
+:black_player: !ruby/object:Player
+  color: black
+  name: m
+  king: &2 !ruby/object:King
+    color: black
+    display: "♚ "
+    moves:
+    - - 1
+      - 1
+    - - -1
+      - -1
+    - - -1
+      - 1
+    - - 1
+      - -1
+    - - 1
+      - 0
+    - - -1
+      - 0
+    - - 0
+      - 1
+    - - 0
+      - -1
+    move_pos:
+    - g2
+    - h2
+    blocked_squares:
+    - d5
+    - b3
+    - b5
+    - d3
+    - d4
+    - b4
+    - c5
+    - c3
+    - f4
+    - g5
+    - h6
+    - d2
+    - c1
+    - b6
+    - a7
+    - f2
+    - g1
+    - f3
+    - g3
+    - h3
+    - a3
+    - e4
+    - e5
+    - e6
+    - e7
+    - e8
+    - e2
+    - e1
+    fail_safe: []
+    location: h1
+    moved: true
+    in_check: false
+  pieces:
+  - *2
+  winner: false
+  draw: false
+:board: !ruby/object:Board
+  layout:
+  - !ruby/object:Square
+    designation: a8
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: b8
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: c8
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: d8
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: e8
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: f8
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: g8
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: h8
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: a7
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: b7
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: c7
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: d7
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: e7
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: f7
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: g7
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: h7
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: a6
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: b6
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: c6
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: d6
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: e6
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: f6
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: g6
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: h6
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: a5
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: b5
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: c5
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: d5
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: e5
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: f5
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: g5
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: h5
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: a4
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: b4
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: c4
+    piece: *1
+    piece_display: "♔ "
+    color: white
+  - !ruby/object:Square
+    designation: d4
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: e4
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: f4
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: g4
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: h4
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: a3
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: b3
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: c3
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: d3
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: e3
+    piece: *3
+    piece_display: "♕ "
+    color: brown
+  - !ruby/object:Square
+    designation: f3
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: g3
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: h3
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: a2
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: b2
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: c2
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: d2
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: e2
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: f2
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: g2
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: h2
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: a1
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: b1
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: c1
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: d1
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: e1
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: f1
+    piece:
+    piece_display: "  "
+    color: white
+  - !ruby/object:Square
+    designation: g1
+    piece:
+    piece_display: "  "
+    color: brown
+  - !ruby/object:Square
+    designation: h1
+    piece: *2
+    piece_display: "♚ "
+    color: white
+:turn: white
+:turn_iterations: 91

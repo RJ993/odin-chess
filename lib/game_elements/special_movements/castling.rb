@@ -59,6 +59,7 @@ module Castling
   end
 
   def act_of_castling(king_square, rook_square, square_one, square_two, square_three = Square.new('', 'white'))
+    return if square_one == nil || square_two == nil || square_three == nil
     if square_one.piece == nil && square_two.piece == nil && square_three.piece == nil
         square_two.change_piece(self)
         square_one.change_piece(rook_square.piece)

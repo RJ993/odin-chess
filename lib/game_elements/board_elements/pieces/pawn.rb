@@ -86,7 +86,7 @@ class Pawn
 
   def pawn_conditions(player)
     player.pieces.each do |piece|
-      self.en_passant_able = false if piece.class == Pawn && self.first_move == false
+      piece.en_passant_able = false if piece.class == Pawn && piece.first_move == false
     end
     self.en_passant_able = true if self.first_move == true
     self.first_move = false if self.first_move == true

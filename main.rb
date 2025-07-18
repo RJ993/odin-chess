@@ -15,7 +15,7 @@ if input == 'n'
   game.introduction
 elsif (input == 'l') && (File.zero?('only_save_file/current_game.yml') == false)
   game = Game.new
-  game.load_game
+  game.load_game('./only_save_file/current_game.yml')
   game.play
 elsif (input == 'l') && File.zero?('only_save_file/current_game.yml') == true
   puts "You haven't played a game yet. Please try opening the game again and play a new game."

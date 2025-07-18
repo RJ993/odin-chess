@@ -33,14 +33,12 @@ module Movement
   end
 
   def reset_movement(current_square, new_square, taken, taken_piece, opposing_player, moved_piece)
+    current_square.change_piece(moved_piece)
     if taken == true
       opposing_player.pieces.push(taken_piece[0])
       new_square.change_piece(taken_piece[0])
     else
       new_square.reset_square
     end
-    current_square.change_piece(moved_piece)
-    square = nil
-    return square
   end
 end

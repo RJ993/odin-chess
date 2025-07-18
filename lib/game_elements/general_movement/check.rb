@@ -33,7 +33,7 @@ module Check
         piece.mock_move(board, move, self, opposing_player, useless_squares)
       end
       useless_squares.each do |pos|
-        piece.move_pos.delete(pos) if useless_squares.include?(pos)
+        piece.move_pos.delete(pos) if useless_squares.include?(pos) if piece.class != King
         if piece.class == King
         piece.fail_safe.push(pos) if useless_squares.include?(pos)
         end
@@ -42,5 +42,6 @@ module Check
     self.king.fail_safe.each do |pos|
       self.king.move_pos.delete(pos) if self.king.fail_safe.include?(pos)
     end
+    self.king.fail_safe = []
   end
 end

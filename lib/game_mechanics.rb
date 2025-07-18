@@ -4,7 +4,7 @@ require_relative 'game_elements/win_conditions'
 require_relative '../serialize'
 
 class Game
-  attr_accessor :white_player, :black_player
+  attr_accessor :white_player, :black_player, :board
   include Win_Conditions
   include Serialize
 
@@ -12,6 +12,8 @@ class Game
     @white_player = nil
     @black_player = nil
     @board = Board.new
+    @turn = nil
+    @turn_iterations = 1
   end
   
   def introduction
@@ -25,21 +27,25 @@ class Game
     white_set_up
   end
 
-  def init_move(player)
+  def init_move(player, opposing_player)
     finished_move = ''
     until (finished_move != nil && finished_move != '' )
       puts "Now #{player.name}, where are you moving FROM?"
       input = gets.chomp.downcase
-      finished_move = player.make_move(input, @board, @black_player)
+      finished_move = player.make_move(input, @board, opposing_player)
     end
   end
 
   def play
+    draw_called = false
     until @white_player.winner == true || @black_player.winner == true || (@white_player.draw == true && @black_player.draw == true)
-      draw_called = false
-      draw_called = player_action(@white_player, @black_player)
+      @turn = 'white' if draw_called == false && @turn_iterations.odd?
+      draw_called = player_action(@white_player, @black_player) if @turn == 'white'
+      @turn_iterations += 1
       return if @white_player.winner == true || @black_player.winner == true || (@white_player.draw == true && @black_player.draw == true)
-      player_action(@black_player, @white_player) if draw_called == false
+      @turn = 'black' if draw_called == false && @turn_iterations.even?
+      draw_called = player_action(@black_player, @white_player) if @turn == 'black'
+      @turn_iterations += 1
     end
   end
 
@@ -81,8 +87,8 @@ class Game
     puts @board.reversed if player.color == 'black'
     drawn = false
     define_legal_moves(opposing_player, player)
-    opposing_player.winner = true if win_and_draw_checks(player, opposing_player) == true
-    return if opposing_player.winner == true || player.winner == true
+    return if win_and_draw_checks(player, opposing_player) == true
+    player.in_check?
     puts 'What will your action be? ("i" for instructions, "s" to save AND quit, "p" to play on, "r" for resignation, and "d" to offer a draw.)'
     input = gets.chomp.downcase
     case input
@@ -93,11 +99,11 @@ class Game
     when 'i'
       drawn = instructions
     when 's'
-      to_yaml
+      to_yaml('only_save_file/current_game.yml')
       @white_player.draw = true
       @black_player.draw = true
     else
-      init_move(player)
+      init_move(player, opposing_player)
     end
     drawn
   end
