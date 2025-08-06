@@ -84,6 +84,7 @@ class Game
     turn_ended.prep_movement(@board, turn_started)
     turn_started.prep_movement(@board, turn_ended)
     turn_started.sim_move(@board, turn_ended)
+    maintain_board
   end
 
   def player_action(player, opposing_player)
@@ -128,5 +129,10 @@ selecting the square your king is on and input either "o-o" or "o-o-o" depending
     puts 'When you are in check, your king is attacked but can move a piece to get out while in checkmate, you have no more legal moves'
     puts 'A stalemate is when you have no more legal moves but you are NOT attacked by any piece.'
     true
+  end
+
+  def maintain_board
+    white_player.check_squares(board)
+    black_player.check_squares(board)
   end
 end

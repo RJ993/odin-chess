@@ -38,4 +38,11 @@ class Player
     the_move = gets.chomp.downcase
     the_piece.move(self, opposing_player, board, the_move)
   end
+
+  def check_squares(board)
+    pieces.each do |piece|
+      square = board.layout.find { |square| square.designation == piece.location }
+      square.change_piece(piece) if square.piece.nil?
+    end
+  end
 end
